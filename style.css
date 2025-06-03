@@ -242,3 +242,11 @@ footer p {
     grid-template-columns: 1fr;
   }
 }
+
+.content-section {
+    display: none; /* Semua section disembunyikan default */
+}
+
+.content-section.active {
+    display: block; /* Hanya section aktif yang ditampilkan */
+}
