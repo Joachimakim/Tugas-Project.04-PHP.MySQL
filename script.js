@@ -25,20 +25,40 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Navigation functionality
-function setupNavigation() {
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const sectionId = this.getAttribute('href').substring(1);
-            setActiveSection(sectionId);
-            
-            // Smooth scroll to section
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth'
-            });
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Dapatkan target section
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        // Sembunyikan semua section
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
         });
+        
+        // Tampilkan target section
+        if(targetSection) {
+            targetSection.classList.add('active');
+            
+            // Scroll ke section
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Update active nav link
+        document.querySelectorAll('nav a').forEach(navLink => {
+            navLink.classList.remove('active');
+        });
+        this.classList.add('active');
     });
-}
+});
+
+// Set home sebagai default active
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('home').classList.add('active');
+    document.querySelector('nav a[href="#home"]').classList.add('active');
+});
 
 function setActiveSection(sectionId) {
     // Hide all sections
@@ -122,3 +142,14 @@ window.addEventListener('scroll', function() {
         }
     });
 });
+
+// Cek apakah event listener terpasang
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function() {
+        console.log('Link clicked:', this.getAttribute('href'));
+    });
+});
+
+// Cek visibility section
+console.log('Home section:', document.getElementById('home').style.display);
+console.log('Gallery section:', document.getElementById('gallery').style.display);
